@@ -19,7 +19,7 @@ function addRandomFact() {
   const facts =
       ['My hair is blonde.', 'I am 6 feet 3 inches tall.', 'Soccer is my favorite sport.', 'I enjoy relaxing in my hammock on the beach.', 'The Los Angeles Lakers is my favorite sport team.', 'I go to school at UCSB.', 'I have lived in Los Angeles my entire life.', 'Io parlo italiano.'];
 
-  // Pick a random greeting.
+  // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.

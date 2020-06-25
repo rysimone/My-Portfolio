@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <title>Ryan's Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script>
+
+        function addRandomFact() {
+            const facts = 
+                ['hair', 'height', 'lakers', 'hammock', 'ucsb', 'italian'];
+
+            // Pick a random fact.
+            const fact = facts[Math.floor(Math.random() * facts.length)];
+
+            // Add it to the page.
+            const showFact = document.getElementById(fact);
+            showFact.style.display = "block";
+        }
+
+    </script>
   </head>
   <body>
     <div id="content">
@@ -27,7 +41,14 @@
       <img src="images/IMG-3136.jpg" id="img"/>
       <p>Click here to get a random fact about me:</p>
       <button onclick="addRandomFact()">Get Fact</button>
-      <div id="fact-container"></div>
+      <div id="fact-container">
+          <div id="hair", style="display:none">I have blonde hair.</div>
+          <div id="lakers", style="display:none">My favorite sports team is the Los Angeles Lakers.</div>
+          <div id="height", style="display:none">I am 6 feet 3 inches tall.</div>
+          <div id="hammock", style="display:none">I enjoy relaxing in my hammock on the beach.</div>
+          <div id="italian", style="display:none">Io parlo italiano.</div>
+          <div id="ucsb", style="display:none">I attend the University of California Santa Barbara.</div>
+      </div>
       <p> You can visit my github page <a href="https://github.com/rysimone">here</a>.</p>
       <p> You can visit my linkedin page <a href="https://www.linkedin.com/in/ryan-simone-186062171/">here</a>.</p>
     </div>
