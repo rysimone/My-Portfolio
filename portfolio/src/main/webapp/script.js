@@ -13,16 +13,18 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
 function addRandomFact() {
   const facts =
-      ['My hair is blonde.', 'I am 6 feet 3 inches tall.', 'Soccer is my favorite sport.', 'I enjoy relaxing in my hammock on the beach.', 'The Los Angeles Lakers is my favorite sport team.', 'I go to school at UCSB.', 'I have lived in Los Angeles my entire life.', 'Io parlo italiano.'];
+        ['#hair', '#height', '#lakers', '#hammock', '#ucsb', '#italian'];
 
   // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
 
-  // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fact;
+  // remove any visible fact
+  document.querySelectorAll('.fact.visible').forEach(element => element.classList.remove('visible'));
+
+  //display the random fact chosen
+  document.querySelector(fact).classList.add('visible');
 }

@@ -4,53 +4,40 @@
     <meta charset="UTF-8">
     <title>Ryan's Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <script>
-
-        function addRandomFact() {
-            const facts = 
-                ['hair', 'height', 'lakers', 'hammock', 'ucsb', 'italian'];
-
-            // Pick a random fact.
-            const fact = facts[Math.floor(Math.random() * facts.length)];
-
-            // Add it to the page.
-            const showFact = document.getElementById(fact);
-            showFact.style.display = "block";
-        }
-
-    </script>
+    <script src="script.js"></script>
   </head>
   <body>
     <div id="content">
       <h1>Ryan's Portfolio</h1>
+      <img src="images/IMG-3136.jpg" class="mediumImg"/>
       <p>Hello! My name is Ryan Simone and I am currently a Google Step Intern.</p>
       <p>I am a rising junior at the University of California Santa Barbara pursuing a Bachelor's degree in Computer Science.</p>
       <p>I'm the youngest, yet tallest, member of my family. I've lived in Southern California my entire life.</p>
       <h2>Hobbies</h2>
-      <dl>
-          <dt>I love watching sports. My favorite is soccer.</dt>
-          <dt>I enjoy skateboarding and surfing.</dt>
-          <dt>I listen to music constantly. My favorite genre is surf rock.</dt>
-      </dl>
+      <ul>
+          <li>I love watching sports. My favorite is soccer.</dt>
+          <li>I enjoy skateboarding and surfing.</dt>
+          <li>I listen to music constantly. My favorite genre is surf rock.</dt>
+      </ul>
       <h2>Projects</h2>
-      <dl>
-          <dt>Create a shared music queue web app with some classmates.</dt>
-          <dt>Created a smart calendar web app with a group of friends to help improve peoples' busy schedules.</dt>
-          <dt>Created an LA sports fan website with my brother.</dt>
-      </dl>
-      <img src="images/IMG-3136.jpg" id="img"/>
+      <ul>
+          <li>Create a shared music queue web app with some classmates.</dt>
+          <li>Created a smart calendar web app with a group of friends to help improve peoples' busy schedules.</dt>
+          <li>Created an LA sports fan website with my brother.</dt>
+      </ul>
+      
       <p>Click here to get a random fact about me:</p>
       <button onclick="addRandomFact()">Get Fact</button>
       <div id="fact-container">
-          <div id="hair", style="display:none">I have blonde hair.</div>
-          <div id="lakers", style="display:none">My favorite sports team is the Los Angeles Lakers.</div>
-          <div id="height", style="display:none">I am 6 feet 3 inches tall.</div>
-          <div id="hammock", style="display:none">I enjoy relaxing in my hammock on the beach.</div>
-          <div id="italian", style="display:none">Io parlo italiano.</div>
-          <div id="ucsb", style="display:none">I attend the University of California Santa Barbara.</div>
+          <div id="hair", class="fact">I have blonde hair.</div>
+          <div id="lakers", class="fact">My favorite sports team is the Los Angeles Lakers.</div>
+          <div id="height", class="fact">I am 6 feet 3 inches tall.</div>
+          <div id="hammock", class="fact">I enjoy relaxing in my hammock on the beach.</div>
+          <div id="italian", class="fact">Io parlo italiano.</div>
+          <div id="ucsb", class="fact">I attend the University of California Santa Barbara.</div>
       </div>
-      <p> You can visit my github page <a href="https://github.com/rysimone">here</a>.</p>
-      <p> You can visit my linkedin page <a href="https://www.linkedin.com/in/ryan-simone-186062171/">here</a>.</p>
+      <p> You can visit my <a href="https://github.com/rysimone">github page</a>.</p>
+      <p> You can visit my <a href="https://www.linkedin.com/in/ryan-simone-186062171/">liknedin page</a>.</p>
     </div>
   </body>
 </html>

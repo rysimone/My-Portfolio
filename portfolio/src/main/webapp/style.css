@@ -6,10 +6,19 @@
 
 #fact-container {
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
-#img {
-    height: 250px;
-    width: 350px;
-    margin: 5px;
+.mediumImg {
+  height: 250px;
+  width: 350px;
+  margin: 5px;
+}
+
+.fact {
+  display:none;
+}
+
+.fact.visible {
+  display: block;
 }
