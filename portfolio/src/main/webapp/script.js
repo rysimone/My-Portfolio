@@ -26,3 +26,9 @@ function addRandomFact() {
   // Display the random fact chosen
   randomFact.classList.add('visible');
 }
+
+async function getMessageFromServer() {
+  const response = await fetch('/data');
+  const quote = await response.text();
+  document.getElementById('message-container').innerHTML = quote;
+}
