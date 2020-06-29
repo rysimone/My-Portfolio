@@ -4,6 +4,21 @@
   width: 650px;
 }
 
-#greeting-container {
+#fact-container {
   margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.medium-Img {
+  height: 250px;
+  width: 350px;
+  margin: 5px;
+}
+
+.fact {
+  display: none;
+}
+
+.fact.visible {
+  display: block;
 }
