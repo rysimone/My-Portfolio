@@ -16,15 +16,13 @@
  * Adds a random fact to the page.
  */
 function addRandomFact() {
-  const facts =
-        ['#hair', '#height', '#lakers', '#hammock', '#ucsb', '#italian'];
-
   // Pick a random fact.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
+  const facts = document.getElementsByClassName('fact');
+  const randomFact = facts[Math.floor(Math.random() * facts.length)];
 
-  // remove any visible fact
+  // Remove any visible fact
   document.querySelectorAll('.fact.visible').forEach(element => element.classList.remove('visible'));
 
-  //display the random fact chosen
-  document.querySelector(fact).classList.add('visible');
+  // Display the random fact chosen
+  randomFact.classList.add('visible');
 }
