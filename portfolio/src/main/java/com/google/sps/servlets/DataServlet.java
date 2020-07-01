@@ -19,6 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+import javafx.util.Pair;
 import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
@@ -27,28 +29,21 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
+    ArrayList<Pair<String, String>> surfReport = new ArrayList<Pair<String, String>>(3);
+    surfReport.add(new Pair<String, String>("Tide", "low"));
+    surfReport.add(new Pair<String, String>("WaterTemp", "60"));
+    surfReport.add(new Pair<String, String>("SurfHeight", "3ft"));
 
-    String json = convertToJson();
+    String json = convertToJson(surfReport);
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  private String convertToJson(){
-    ArrayList<String> surfReport = new ArrayList<String>(3);
-    surfReport.add("low");
-    surfReport.add("60");
-    surfReport.add("3ft");
-    String json = "{";
-    json += "\"tide\": ";
-    json += "\"" + surfReport.get(0) + "\"";
-    json += ", ";
-    json += "\"waterTemp\": ";
-    json += "\"" + surfReport.get(1) + "\"";
-    json += ", ";
-    json += "\"surfHeight\": ";
-    json += "\"" + surfReport.get(2) + "\"";
-    json += "}";
+  private String convertToJson(ArrayList<Pair<String, String>> surfReport){
+    Gson gson = new Gson();
+    String json = gson.toJson(surfReport);
     return json;
   }
 }
