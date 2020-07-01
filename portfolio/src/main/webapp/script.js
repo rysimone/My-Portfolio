@@ -30,5 +30,6 @@ function addRandomFact() {
 async function getMessageFromServer() {
   const response = await fetch('/data');
   const quote = await response.text();
+  console.log(quote);
   document.getElementById('message-container').innerHTML = quote;
 }
