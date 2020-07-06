@@ -20,8 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
-import javafx.util.Pair;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -30,10 +29,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    ArrayList<Pair<String, String>> surfReport = new ArrayList<Pair<String, String>>(3);
-    surfReport.add(new Pair<String, String>("Tide", "low"));
-    surfReport.add(new Pair<String, String>("WaterTemp", "60"));
-    surfReport.add(new Pair<String, String>("SurfHeight", "3ft"));
+    HashMap<String, String> surfReport = new HashMap<String, String>();
+    surfReport.put("Tide", "low");
+    surfReport.put("WaterTemp", "60");
+    surfReport.put("SurfHeight", "3ft");
 
     String json = convertToJson(surfReport);
 
@@ -41,7 +40,7 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  private String convertToJson(ArrayList<Pair<String, String>> surfReport){
+  private String convertToJson(HashMap<String, String> surfReport){
     Gson gson = new Gson();
     String json = gson.toJson(surfReport);
     return json;
