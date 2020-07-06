@@ -24,7 +24,13 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 =======
 import java.util.ArrayList;
+<<<<<<< HEAD
 >>>>>>> de63878... Adds a text area to insert comments and displays them on the /data page
+=======
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+>>>>>>> 8decb6b... Stores comments with Datastore rather than an ArrayList
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -56,10 +62,14 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = getParameter(request, "text-input", "");
-    comments.add(text);
-    response.setContentType("text/html;");
+    //comments.add(text);
+    //response.setContentType("text/html;");
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("message", text);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
     
     response.sendRedirect("index.html");
   }
