@@ -39,7 +39,10 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-input", "");
     comments.add(text);
     response.setContentType("text/html;");
-    response.getWriter().println(comments.get(0));
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    
+    response.sendRedirect("index.html");
   }
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
