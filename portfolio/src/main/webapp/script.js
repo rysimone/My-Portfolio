@@ -27,8 +27,9 @@ function addRandomFact() {
   randomFact.classList.add('visible');
 }
 
-async function getMessageFromServer() {
+async function addComments() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('message-container').innerHTML = quote;
+  const comment = await response.text();
+  document.getElementById('comments-container').innerHTML = comment;
 }
+
