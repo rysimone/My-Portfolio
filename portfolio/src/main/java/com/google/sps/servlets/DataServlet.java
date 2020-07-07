@@ -29,7 +29,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns some example content. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -41,7 +41,8 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-      String comment = entity.getProperty("message");
+      response.setContentType("text/html");
+      response.getWriter().println("<dt>"+entity.getProperty("name")+": "+entity.getProperty("message")+"</dt>");
     }
 
     String json = convertToJson(surfReport);
@@ -59,10 +60,11 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String name = getParameter(request, "name-input", "Anonymous");
     String text = getParameter(request, "text-input", "");
-    
 
     Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
     commentEntity.setProperty("message", text);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -79,3 +81,5 @@ public class DataServlet extends HttpServlet {
     return value;
   }
 }
+
+
