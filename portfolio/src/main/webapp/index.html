@@ -44,11 +44,14 @@
         <textarea name="name-input">Enter Name here</textarea>
         <br></br>
         <textarea name="text-input">Enter comment here</textarea>
-        <br/><br/>
+        <br></br>
         <input type="submit"/>
       </form>
       <br></br>
-      <button onclick="addComments()">Load Comments</button>
+      <div id="comment-buttons">
+        <button onclick="addComments()">Load Comments</button>
+        <button onclick="deleteComments()">Clear Comments</button>
+      </div>
       <div id="comments-container"></div>
 
     </div>
