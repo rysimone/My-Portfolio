@@ -56,6 +56,7 @@ function addQuoteToDom(quote) {
  * whichever syntax makes the most sense to you.
  */
 function getRandomQuoteUsingArrowFunctions() {
+  console.log('Fetching quote with arrow functions.')
   fetch('/random-quote').then(response => response.text()).then((quote) => {
     document.getElementById('quote-container').innerText = quote;
   });
@@ -67,6 +68,7 @@ function getRandomQuoteUsingArrowFunctions() {
  * Promises.
  */
 async function getRandomQuoteUsingAsyncAwait() {
+  console.log('Fetching message from the server.');
   const response = await fetch('/random-quote');
   const quote = await response.text();
   document.getElementById('quote-container').innerText = quote;
