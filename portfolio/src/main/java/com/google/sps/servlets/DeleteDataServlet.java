@@ -31,14 +31,20 @@ import com.google.appengine.api.datastore.Key;
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
 
+  //Creates a query that retrieves all the comment entities in the Datastore
+  const Query QUERY = new Query("Comment");
+
+  //Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
+  const DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
+
+  //Stores all the comment entites using the query defined
+  const PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
+
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("message", SortDirection.DESCENDING);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-    for (Entity entity : results.asIterable()) {
+    for (Entity entity : RESULTS.asIterable()) {
       Key commentKey = entity.getKey();
-      datastore.delete(commentKey);
+      DATASTORE.delete(commentKey);
     }
   }
 }

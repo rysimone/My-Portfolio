@@ -27,12 +27,14 @@ function addRandomFact() {
   randomFact.classList.add('visible');
 }
 
+// Retrieves comments from /data and places them in the DOM
 async function addComments() {
   const response = await fetch('/data');
   const comment = await response.text();
   document.getElementById('comments-container').innerHTML = comment;
 }
 
+// Sends POST Request to /delete-data to delete all the comments in the Datastore and removes them from the DOM
 async function deleteComments() {
   const request = new Request('/delete-data', {method: 'POST'});
   await fetch(request);

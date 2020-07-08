@@ -29,19 +29,23 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. */
+/** Servlet that returns that stores and retrieves comments from the Datastore. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  // Creates a query that retrieves all the comment entities in the Datastore
+  const Query QUERY = new Query("Comment").addSort("message", SortDirection.DESCENDING);
+
+  // Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
+  const DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
+
+  // Stores all the comment entites using the query defined
+  const PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    Query query = new Query("Comment").addSort("message", SortDirection.DESCENDING);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-    for (Entity entity : results.asIterable()) {
-      response.setContentType("text/html");
+    response.setContentType("text/html");
+    for (Entity entity : RESULTS.asIterable()) {
       response.getWriter().println("<dt>"+entity.getProperty("name")+": "+entity.getProperty("message")+"</dt>");
     }
 
@@ -57,7 +61,6 @@ public class DataServlet extends HttpServlet {
     return json;
   }
 
-
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String name = getParameter(request, "name-input", "Anonymous");
@@ -67,8 +70,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("message", text);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+    DATASTORE.put(commentEntity);
     
     response.sendRedirect("index.html");
   }
