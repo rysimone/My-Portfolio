@@ -33,3 +33,9 @@ async function addComments() {
   document.getElementById('comments-container').innerHTML = comment;
 }
 
+async function deleteComments() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  await fetch(request);
+  addComments();
+}
+
