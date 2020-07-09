@@ -21,7 +21,8 @@ function addRandomFact() {
   const randomFact = facts[Math.floor(Math.random() * facts.length)];
 
   // Remove any visible fact
-  document.querySelectorAll('.fact.visible').forEach(element => element.classList.remove('visible'));
+  document.querySelectorAll('.fact.visible')
+      .forEach(element => element.classList.remove('visible'));
 
   // Display the random fact chosen
   randomFact.classList.add('visible');
@@ -34,10 +35,10 @@ async function addComments() {
   document.getElementById('comments-container').innerHTML = comment;
 }
 
-// Sends POST Request to /delete-data to delete all the comments in the Datastore and removes them from the DOM
+// Sends POST Request to /delete-data to delete all the comments in the
+// Datastore and removes them from the DOM
 async function deleteComments() {
   const request = new Request('/delete-data', {method: 'POST'});
   await fetch(request);
   addComments();
 }
-

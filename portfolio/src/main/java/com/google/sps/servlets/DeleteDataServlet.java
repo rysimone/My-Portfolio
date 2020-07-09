@@ -14,30 +14,29 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.datastore.Key;
 
 /** Servlet that deletes comments in Datastore. */
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
-
-  //Creates a query that retrieves all the comment entities in the Datastore
+  // Creates a query that retrieves all the comment entities in the Datastore
   const Query QUERY = new Query("Comment");
 
-  //Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
+  // Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
   const DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
 
-  //Stores all the comment entites using the query defined
+  // Stores all the comment entites using the query defined
   const PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
   @Override

@@ -14,25 +14,24 @@
 
 package com.google.sps.servlets;
 
-import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import com.google.gson.Gson;
-import java.util.HashMap;
-import java.util.ArrayList;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns that stores and retrieves comments from the Datastore. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-
   // Creates a query that retrieves all the comment entities in the Datastore
   const Query QUERY = new Query("Comment").addSort("message", SortDirection.DESCENDING);
 
@@ -46,7 +45,8 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");
     for (Entity entity : RESULTS.asIterable()) {
-      response.getWriter().println("<dt>"+entity.getProperty("name")+": "+entity.getProperty("message")+"</dt>");
+      response.getWriter().println(
+          "<dt>" + entity.getProperty("name") + ": " + entity.getProperty("message") + "</dt>");
     }
 
     String json = convertToJson(surfReport);
@@ -55,7 +55,7 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  private String convertToJson(HashMap<String, String> surfReport){
+  private String convertToJson(HashMap<String, String> surfReport) {
     Gson gson = new Gson();
     String json = gson.toJson(surfReport);
     return json;
@@ -71,7 +71,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("message", text);
 
     DATASTORE.put(commentEntity);
-    
+
     response.sendRedirect("index.html");
   }
 
@@ -83,5 +83,3 @@ public class DataServlet extends HttpServlet {
     return value;
   }
 }
-
-
