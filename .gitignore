@@ -1,2 +1,6 @@
 target/
 .idea
+
+# Ignore generated NPM files
+package-lock.json
+node_modules/
