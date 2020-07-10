@@ -28,19 +28,18 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");
-
+    String urlToRedirectTo = "/index.html";
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       String userEmail = userService.getCurrentUser().getEmail();
-      String urlToRedirectToAfterUserLogsOut = "/index.html";
-      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      response.getWriter().println("<p>Hi There</p>");
-      response.getWriter().println("<a href=\"" + logoutUrl + "\">Logout</a>");
-    } else {
-      String urlToRedirectToAfterUserLogsIn = "/index.html";
-      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+      
+      String logoutUrl = userService.createLogoutURL(urlToRedirectTo);
 
-      response.getWriter().println("<a href=\"" + loginUrl + "\">Login</a>");
+      response.getWriter().println(logoutUrl);
+    } else {
+      String loginUrl = userService.createLoginURL(urlToRedirectTo);
+
+      response.getWriter().println(loginUrl);
     }
   }
 }

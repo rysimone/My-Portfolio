@@ -32,3 +32,23 @@ async function getMessageFromServer() {
   const quote = await response.text();
   document.getElementById('message-container').innerHTML = quote;
 }
+
+function login(url){
+  window.location = url;
+}
+
+function logout(url){
+  window.location = url;
+}
+
+async function checkLoginStatus(){
+  const response = await fetch('/login');
+  const status = await response.text();
+  
+  if(status.localeCompare("/_ah/login?continue=%2Findex.html")){
+      login(status);
+  }
+  else {
+      logout(status);
+  }
+}

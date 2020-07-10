@@ -27,3 +27,8 @@
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+.login-button {
+  background-color: blueviolet;
+  color: white;
+}
