@@ -40,20 +40,8 @@ function login(url){
 async function setButtonName(){
   const response = await fetch('/login');
   const status = await response.text();
-  let obj = JSON.parse(status);
-  let element = document.getElementById("login-button");
-  if(!(obj.status.localeCompare("Login"))){
-      element.value = "Login";
-  }
-  else {
-      console.log(obj.status);
-      element.value = "Logout";
-  }
-}
-
-async function logInUser(){
-  const response = await fetch('/login');
-  const status = await response.text();
-  let obj = JSON.parse(status);
-  login(obj.url);
+  const obj = JSON.parse(status);
+  const element = document.getElementById("login-button");
+  element.innerText = obj.status;
+  element.href = obj.url;
 }

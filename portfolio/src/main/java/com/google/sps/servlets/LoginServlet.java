@@ -26,14 +26,13 @@ import com.google.gson.Gson;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-  
-  HashMap<String, String> loginStatus = new HashMap<String, String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String urlToRedirectTo = "/index.html";
     UserService userService = UserServiceFactory.getUserService();
     String url = "";
+    HashMap<String, String> loginStatus = new HashMap<String, String>();
     if (userService.isUserLoggedIn()) {
       
       url = userService.createLogoutURL(urlToRedirectTo);
@@ -46,15 +45,9 @@ public class LoginServlet extends HttpServlet {
       loginStatus.put("url", url);
       loginStatus.put("status", "Login");
     }
-    String json = convertToJson(loginStatus);
+    String json = new Gson().toJson(loginStatus);
     response.setContentType("application/json;");
     response.getWriter().println(json);
-    loginStatus.clear();
   }
 
-  private String convertToJson(HashMap<String, String> status){
-    Gson gson = new Gson();
-    String json = gson.toJson(status);
-    return json;
-  }
 }
