@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+<<<<<<< HEAD
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -26,10 +27,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+=======
+import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+>>>>>>> 47706cc18a833fcc484beeea2043d9cba9b46015
 
 /** Servlet that deletes comments in Datastore. */
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
+<<<<<<< HEAD
   // Creates a query that retrieves all the comment entities in the Datastore
   Query QUERY = new Query("Comment");
 

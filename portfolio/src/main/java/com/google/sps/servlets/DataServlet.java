@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns that stores and retrieves comments from the Datastore. */
+
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   // Creates a query that retrieves all the comment entities in the Datastore
@@ -41,6 +42,8 @@ public class DataServlet extends HttpServlet {
   // Stores all the comment entites using the query defined
   PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
+  private ArrayList<String> comments = new ArrayList<>();
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     HashMap<Object, Object> comments = new HashMap<Object, Object>();
@@ -49,15 +52,15 @@ public class DataServlet extends HttpServlet {
     }
 
     String json = convertToJson(comments);
-
     response.setContentType("application/json;");
-    response.getWriter().println(json);
+    response.getWriter().println(comments);
   }
 
   private String convertToJson(HashMap<Object, Object> comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
+
   }
 
   @Override
