@@ -37,18 +37,23 @@ function login(url){
   window.location = url;
 }
 
-function logout(url){
-  window.location = url;
-}
-
-async function checkLoginStatus(){
+async function setButtonName(){
   const response = await fetch('/login');
   const status = await response.text();
-  
-  if(status.localeCompare("/_ah/login?continue=%2Findex.html")){
-      login(status);
+  let obj = JSON.parse(status);
+  let element = document.getElementById("login-button");
+  if(!(obj.status.localeCompare("Login"))){
+      element.value = "Login";
   }
   else {
-      logout(status);
+      console.log(obj.status);
+      element.value = "Logout";
   }
+}
+
+async function logInUser(){
+  const response = await fetch('/login');
+  const status = await response.text();
+  let obj = JSON.parse(status);
+  login(obj.url);
 }

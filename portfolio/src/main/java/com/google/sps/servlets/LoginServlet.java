@@ -21,25 +21,40 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import com.google.gson.Gson;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+  
+  HashMap<String, String> loginStatus = new HashMap<String, String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html");
     String urlToRedirectTo = "/index.html";
     UserService userService = UserServiceFactory.getUserService();
+    String url = "";
     if (userService.isUserLoggedIn()) {
-      String userEmail = userService.getCurrentUser().getEmail();
       
-      String logoutUrl = userService.createLogoutURL(urlToRedirectTo);
+      url = userService.createLogoutURL(urlToRedirectTo);
 
-      response.getWriter().println(logoutUrl);
+      loginStatus.put("url", url);
+      loginStatus.put("status", "Logout");
     } else {
-      String loginUrl = userService.createLoginURL(urlToRedirectTo);
+      url = userService.createLoginURL(urlToRedirectTo);
 
-      response.getWriter().println(loginUrl);
+      loginStatus.put("url", url);
+      loginStatus.put("status", "Login");
     }
+    String json = convertToJson(loginStatus);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+    loginStatus.clear();
+  }
+
+  private String convertToJson(HashMap<String, String> status){
+    Gson gson = new Gson();
+    String json = gson.toJson(status);
+    return json;
   }
 }
