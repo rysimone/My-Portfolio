@@ -32,14 +32,12 @@ function addRandomFact() {
 async function addComments() {
   const response = await fetch('/data');
   const comments = await response.json();
-  comments.forEach(obj => {
-      Object.entries(obj).forEach(([key,value]) => {
-          let comment = document.createElement("dt");
-          let text = document.createTextNode(key + ": " + value);
-          comment.appendChild(text);
-          document.getElementsById('comments-container').appendChild(comment);
-      });
-  });
+  for(var key of Object.keys(comments)){
+      let comment = document.createElement("dt");
+      let text = document.createTextNode(key + ": " + comments[key]);
+      comment.appendChild(text);
+      document.getElementById('comments-container').appendChild(comment);
+  }
 }
 
 // Sends POST Request to /delete-data to delete all the comments in the
