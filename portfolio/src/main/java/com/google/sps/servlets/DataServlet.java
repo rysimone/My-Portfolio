@@ -33,31 +33,30 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   // Creates a query that retrieves all the comment entities in the Datastore
-  const Query QUERY = new Query("Comment").addSort("message", SortDirection.DESCENDING);
+  Query QUERY = new Query("Comment").addSort("message", SortDirection.DESCENDING);
 
   // Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
-  const DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
+  DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
 
   // Stores all the comment entites using the query defined
-  const PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
+  PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html");
+    HashMap<Object, Object> comments = new HashMap<Object, Object>();
     for (Entity entity : RESULTS.asIterable()) {
-      response.getWriter().println(
-          "<dt>" + entity.getProperty("name") + ": " + entity.getProperty("message") + "</dt>");
+      comments.put(entity.getProperty("name"), entity.getProperty("message"));
     }
 
-    String json = convertToJson(surfReport);
+    String json = convertToJson(comments);
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  private String convertToJson(HashMap<String, String> surfReport) {
+  private String convertToJson(HashMap<Object, Object> comments) {
     Gson gson = new Gson();
-    String json = gson.toJson(surfReport);
+    String json = gson.toJson(comments);
     return json;
   }
 

@@ -31,13 +31,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
   // Creates a query that retrieves all the comment entities in the Datastore
-  const Query QUERY = new Query("Comment");
+  Query QUERY = new Query("Comment");
 
   // Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
-  const DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
+  DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
 
   // Stores all the comment entites using the query defined
-  const PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
+  PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
