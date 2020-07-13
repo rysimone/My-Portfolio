@@ -32,19 +32,17 @@ public class LoginServlet extends HttpServlet {
     String urlToRedirectTo = "/index.html";
     UserService userService = UserServiceFactory.getUserService();
     String url = "";
-    HashMap<String, String> loginStatus = new HashMap<String, String>();
+    String status = "";
     if (userService.isUserLoggedIn()) {
-      
       url = userService.createLogoutURL(urlToRedirectTo);
-
-      loginStatus.put("url", url);
-      loginStatus.put("status", "Logout");
+      status = "Logout";
     } else {
       url = userService.createLoginURL(urlToRedirectTo);
-
-      loginStatus.put("url", url);
-      loginStatus.put("status", "Login");
+      status = "Login";
     }
+    HashMap<String, String> loginStatus = new HashMap<String, String>();
+    loginStatus.put("url", url);
+    loginStatus.put("status", status);
     String json = new Gson().toJson(loginStatus);
     response.setContentType("application/json;");
     response.getWriter().println(json);

@@ -33,11 +33,8 @@ async function getMessageFromServer() {
   document.getElementById('message-container').innerHTML = quote;
 }
 
-function login(url){
-  window.location = url;
-}
 
-async function setButtonName(){
+async function configureLoginLink(){
   const response = await fetch('/login');
   const status = await response.text();
   const obj = JSON.parse(status);
