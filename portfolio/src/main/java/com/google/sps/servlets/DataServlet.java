@@ -42,8 +42,6 @@ public class DataServlet extends HttpServlet {
   // Stores all the comment entites using the query defined
   PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
-  private ArrayList<String> comments = new ArrayList<>();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     HashMap<Object, Object> comments = new HashMap<Object, Object>();
@@ -51,17 +49,11 @@ public class DataServlet extends HttpServlet {
       comments.put(entity.getProperty("name"), entity.getProperty("message"));
     }
 
-    String json = convertToJson(comments);
+    String json = new Gson().toJson(comments);
     response.setContentType("application/json;");
-    response.getWriter().println(comments);
+    response.getWriter().println(json);
   }
 
-  private String convertToJson(HashMap<Object, Object> comments) {
-    Gson gson = new Gson();
-    String json = gson.toJson(comments);
-    return json;
-
-  }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
