@@ -14,35 +14,66 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.google.gson.Gson;
-import java.util.HashMap;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns that stores and retrieves comments from the Datastore. */
+
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  // Creates a query that retrieves all the comment entities in the Datastore
+  private static final Query QUERY = new Query("Comment").addSort("message", SortDirection.DESCENDING);
+
+  // Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
+  private static final DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
+
+  // Gives access to all comment entities
+  private static final PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
-    HashMap<String, String> surfReport = new HashMap<String, String>();
-    surfReport.put("Tide", "low");
-    surfReport.put("WaterTemp", "60");
-    surfReport.put("SurfHeight", "3ft");
+    HashMap<Object, Object> comments = new HashMap<Object, Object>();
+    for (Entity entity : RESULTS.asIterable()) {
+      comments.put(entity.getProperty("name"), entity.getProperty("message"));
+    }
 
-    String json = convertToJson(surfReport);
-
+    String json = new Gson().toJson(comments);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  private String convertToJson(HashMap<String, String> surfReport){
-    Gson gson = new Gson();
-    String json = gson.toJson(surfReport);
-    return json;
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String name = getParameter(request, "name-input", "Anonymous");
+    String text = getParameter(request, "text-input", "");
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("message", text);
+
+    DATASTORE.put(commentEntity);
+
+    response.sendRedirect("index.html");
+  }
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }

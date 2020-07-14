@@ -23,7 +23,18 @@
   display: block;
 }
 
-#message-container {
+#comments-container {
+  flex-direction: column;
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+#comments-buttons {
+  align-items: center;
+  padding-top: 10px;
+  padding-right: 5px;
+}
+
+#comment-text-field {
+  width: 600px;
 }

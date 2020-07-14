@@ -21,16 +21,32 @@ function addRandomFact() {
   const randomFact = facts[Math.floor(Math.random() * facts.length)];
 
   // Remove any visible fact
-  document.querySelectorAll('.fact.visible').forEach(element => element.classList.remove('visible'));
+  document.querySelectorAll('.fact.visible')
+      .forEach(element => element.classList.remove('visible'));
 
   // Display the random fact chosen
   randomFact.classList.add('visible');
 }
 
-async function getMessageFromServer() {
+// Retrieves comments from /data and places them in the DOM
+async function fetchComments() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('message-container').innerHTML = quote;
+  const comments = await response.json();
+  document.getElementById('comments-container').innerText = "";
+  for(var key of Object.keys(comments)){
+      let comment = document.createElement("dt");
+      let text = document.createTextNode(key + ": " + comments[key]);
+      comment.appendChild(text);
+      document.getElementById('comments-container').appendChild(comment);
+  }
+}
+
+// Sends POST Request to /delete-data to delete all the comments in the
+// Datastore and removes them from the DOM
+async function deleteComments() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  await fetch(request);
+  fetchComments();
 }
 
 
