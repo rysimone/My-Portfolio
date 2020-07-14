@@ -29,9 +29,10 @@ function addRandomFact() {
 }
 
 // Retrieves comments from /data and places them in the DOM
-async function addComments() {
+async function fetchComments() {
   const response = await fetch('/data');
   const comments = await response.json();
+  document.getElementById('comments-container').innerText = "";
   for(var key of Object.keys(comments)){
       let comment = document.createElement("dt");
       let text = document.createTextNode(key + ": " + comments[key]);
@@ -45,5 +46,5 @@ async function addComments() {
 async function deleteComments() {
   const request = new Request('/delete-data', {method: 'POST'});
   await fetch(request);
-  addComments();
+  fetchComments();
 }

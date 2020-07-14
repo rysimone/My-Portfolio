@@ -31,4 +31,10 @@
 
 #comments-buttons {
   align-items: center;
+  padding-top: 10px;
+  padding-right: 5px;
+}
+
+#comment-text-field {
+  width: 600px;
 }

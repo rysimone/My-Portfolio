@@ -34,13 +34,13 @@ import com.google.appengine.api.datastore.Key;
 public class DeleteDataServlet extends HttpServlet {
 
   // Creates a query that retrieves all the comment entities in the Datastore
-  Query QUERY = new Query("Comment");
+  private static final Query QUERY = new Query("Comment");
 
   // Creates an instance of the Datastore so that comments can be retrieved, updated, and deleted
-  DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
+  private static final DatastoreService DATASTORE = DatastoreServiceFactory.getDatastoreService();
 
-  // Stores all the comment entites using the query defined
-  PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
+  // Gives access to all comment entities
+  private static final PreparedQuery RESULTS = DATASTORE.prepare(QUERY);
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -46,12 +46,12 @@
         <p>Please leave a comment below:</p>
         <textarea name="name-input">Enter Name here</textarea>
 
-        <textarea name="text-input">Enter comment here</textarea>
+        <textarea name="text-input" id="comment-text-field">Enter comment here</textarea>
         <button type="submit">Submit</button>
       </form>
 
       <div id="comments-buttons">
-        <button onclick="addComments()" type="button">Load Comments</button>
+        <button onclick="fetchComments()" type="button">Load Comments</button>
         <button onclick="deleteComments()" type="button">Clear Comments</button>
       </div>
       <div id="comments-container"></div>
