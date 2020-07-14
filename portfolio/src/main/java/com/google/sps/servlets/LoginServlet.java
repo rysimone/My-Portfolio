@@ -27,17 +27,21 @@ import com.google.gson.Gson;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
+  // Creates a string that will redirect back to the home page
+  private static final String URLTOREDIRECTTO = "/index.html";
+
+  // Creates an instance of UserService to handle login/logout of users
+  private static final UserService USERSERVICE = UserServiceFactory.getUserService();
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String urlToRedirectTo = "/index.html";
-    UserService userService = UserServiceFactory.getUserService();
     String url = "";
     String status = "";
-    if (userService.isUserLoggedIn()) {
-      url = userService.createLogoutURL(urlToRedirectTo);
+    if (USERSERVICE.isUserLoggedIn()) {
+      url = USERSERVICE.createLogoutURL(URLTOREDIRECTTO);
       status = "Logout";
     } else {
-      url = userService.createLoginURL(urlToRedirectTo);
+      url = USERSERVICE.createLoginURL(URLTOREDIRECTTO);
       status = "Login";
     }
     HashMap<String, String> loginStatus = new HashMap<String, String>();
@@ -47,5 +51,4 @@ public class LoginServlet extends HttpServlet {
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
-
 }
