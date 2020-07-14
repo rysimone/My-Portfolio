@@ -32,3 +32,13 @@ async function getMessageFromServer() {
   const quote = await response.text();
   document.getElementById('message-container').innerHTML = quote;
 }
+
+
+async function configureLoginLink(){
+  const response = await fetch('/login');
+  const status = await response.text();
+  const obj = JSON.parse(status);
+  const element = document.getElementById("login-button");
+  element.innerText = obj.status;
+  element.href = obj.url;
+}
