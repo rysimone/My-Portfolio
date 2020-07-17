@@ -1,11 +1,12 @@
 const mapsKey = config.MAPS_KEY;
-const surfSpots = ['pv', 'tpz', 'bw', 'lf', 'nmbp', 'porto'];
+
 window.onload = createScriptTagForMap();
 
 
 function createMap() {
     const map = new google.maps.Map(
         document.getElementById('map-container'),
+        //Default to Southern California
         {center: {lat:33.835, lng: -118.390}, zoom: 12});
     let pvLatLng = {lat: 33.792, lng: -118.407};
     let tpzLatLng = {lat: 33.832, lng: -118.392};

@@ -42,11 +42,3 @@
 #map-container {
   height: 600px;
 }
-
-.beach {
-  display: none;
-}
-
-.beach.visible {
-  display: block;
-}
