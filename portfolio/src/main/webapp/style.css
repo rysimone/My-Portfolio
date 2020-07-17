@@ -40,5 +40,13 @@
 }
 
 #map-container {
-  height: 100%;
+  height: 600px;
+}
+
+.beach {
+  display: none;
+}
+
+.beach.visible {
+  display: block;
 }
