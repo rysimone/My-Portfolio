@@ -72,10 +72,10 @@ public final class FindMeetingQuery {
     for(Event event : events){
       TimeRange eventTime = event.getWhen();
       
-      /* Checks if the {@ code event} has any attendees that are also an attendee for the new meeting {@code request}
+      /* Checks if the {@code event} has any attendees that are also an attendee for the new meeting {@code request}
        * If the two collections are disjoint, skip this event
        */
-      if((Collections.disjoint(event.getAttendees(), request.getAttendees())) && (!hasOptionalAttendees || Collections.disjoint(event.getAttendees(), request.getOptionalAttendees()))){
+      if(checkIfEventsAreDisjoint(event, request, hasOptionalAttendees)){
           continue;
       }
       // List of all times that the meeting can take place
@@ -83,6 +83,7 @@ public final class FindMeetingQuery {
       // List of all the times the meeting cannot take place
       ArrayList<TimeRange> removeTimes = new ArrayList<TimeRange>();
 
+      // Checks if the {@code eventTime} overlaps with the current {@code time}
       for(TimeRange time: availableMeetingTimes){
           if(time.overlaps(eventTime)) {
             timesAroundEvent(addTimes, removeTimes, request.getDuration(), time, eventTime);
@@ -105,8 +106,12 @@ public final class FindMeetingQuery {
    * @param eventTime: the time of the event 
    */ 
   private void timesAroundEvent(ArrayList<TimeRange> addTimes, ArrayList<TimeRange> removeTimes, long newMeetingDuration, TimeRange time, TimeRange eventTime) {
+    // Create a Time Range for before the {@code eventTime}
     TimeRange beforeConflict = TimeRange.fromStartEnd(time.start(), eventTime.start(), false);
+    // Create a Time Range for after teh {@code eventTime}
     TimeRange afterConflict = TimeRange.fromStartEnd(eventTime.end(), time.end(), false);
+
+    // Checks if the new Time Ranges created are longer than the {@code newMeetingDuration}
     if(beforeConflict.duration() >= newMeetingDuration){
       addTimes.add(beforeConflict);
     }
@@ -128,5 +133,19 @@ public final class FindMeetingQuery {
       }
     });
     return sortedArr;
+  }
+
+  /* Checks if the {@code event} and the {@code request} are disjointed in their attendees and optional attendees
+   * 
+   * @param events: list of scheduled events
+   * @param request: the meeting being requested
+   * @param hasOptionalAttendees: true if the {@code request} has optional attendees
+   * @return: true if the events are dijointed in attendees, false otherwise
+   */
+  private boolean checkIfEventsAreDisjoint(Event event, MeetingRequest request, boolean hasOptionalAttendees){
+    if((Collections.disjoint(event.getAttendees(), request.getAttendees())) && (!hasOptionalAttendees || Collections.disjoint(event.getAttendees(), request.getOptionalAttendees()))){
+      return true;
+    }
+    return false;
   }
 }
