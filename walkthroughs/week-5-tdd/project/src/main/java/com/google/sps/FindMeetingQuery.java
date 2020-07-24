@@ -46,7 +46,7 @@ public final class FindMeetingQuery {
      */
     if(request.checkForOptionalAttendees()){
       ArrayList<TimeRange> availableTimes = findAvailableMeetingTimes(events, request, /* optionalAttendees= */true);
-      if(!request.checkForAttendees() || !availableTimes.isEmpty()){
+      if(!availableTimes.isEmpty()){
           return availableTimes;
       }
     }
@@ -80,7 +80,7 @@ public final class FindMeetingQuery {
       }
       // List to hold any newly-created {@link TimeRange}s from {@code timesAroundEvent}
       ArrayList<TimeRange> addTimes = new ArrayList<TimeRange>();
-      // List to hold any newly-created {@link TimeRange}s from {@code timesAroundEvent} in which the meeting cannot be held
+      // List to hold any {@link TimeRange}s from {@code timesAroundEvent} in which the meeting cannot be held
       ArrayList<TimeRange> removeTimes = new ArrayList<TimeRange>();
 
       // Checks if the {@code eventTime} overlaps with the current {@code time}
@@ -137,12 +137,12 @@ public final class FindMeetingQuery {
    * Optional attendees are only checked if the {@param hasOptionalAttendees} is true
    * @param events: list of scheduled events
    * @param request: the meeting being requested
-   * @param hasOptionalAttendees: true if the {@code request} has optional attendees
+   * @param considerOptionalAttendees: true if the {@code request} has optional attendees
    * @return: true if the events are dijointed in attendees, false otherwise
    */
-  private boolean checkIfAttendeesAreDisjoint(Event event, MeetingRequest request, boolean hasOptionalAttendees){
+  private boolean checkIfAttendeesAreDisjoint(Event event, MeetingRequest request, boolean considerOptionalAttendees){
     return Collections.disjoint(event.getAttendees(), request.getAttendees()) &&
-     (!hasOptionalAttendees ||
+     (!considerOptionalAttendees ||
        Collections.disjoint(event.getAttendees(), request.getOptionalAttendees()));
   }
 }
