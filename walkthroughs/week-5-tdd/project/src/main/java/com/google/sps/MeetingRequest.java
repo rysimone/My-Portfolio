@@ -50,12 +50,26 @@ public final class MeetingRequest {
   public Collection<String> getAttendees() {
     return Collections.unmodifiableCollection(attendees);
   }
+  
+  /**
+  * Return true if attendees is not empty; false if it is empty;
+  */
+  public boolean checkForAttendees() {
+    return !attendees.isEmpty();
+  }
 
   /**
    * Returns a read-only copy of the people who are optional to attend this meeting.
    */
   public Collection<String> getOptionalAttendees() {
     return Collections.unmodifiableCollection(optional_attendees);
+  }
+  
+  /**
+  * Return true if optional_attendees is not empty; false if it is empty;
+  */
+  public boolean checkForOptionalAttendees() {
+    return !optional_attendees.isEmpty();
   }
 
   /**
